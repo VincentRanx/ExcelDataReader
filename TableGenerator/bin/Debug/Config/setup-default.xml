@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<setup>
+  <class-mode lang="csharp">
+
+    <namespace name="GameLogic">
+      <using>Devil.ContentProvider</using>
+      <using>Devil.Utility</using>
+      <using>Newtonsoft.Json.Linq</using>
+    </namespace>
+
+    <patterns>
+      <int>^(\-|\+)?\d+$</int>
+      <uint>^\+?\d+$</uint>
+      <float>^(\-|\+)?\d+(\.\d+)?$</float>
+      <string>[\w\W]*</string>
+      <enum>^([a-zA-Z_]+[0-9]*|\d+)$</enum>
+      <mask>^([z-zA-Z_,])*$</mask>
+      <int_array>^\[((\-|\+)?\d+,?)*\]$</int_array>
+      <matrix>^\[(\[((\-|\+)?\d+,?)*\],?)*\]$</matrix>
+    </patterns>
+
+    <formaters>
+      <mask class="TableCore.Plugin.MaskDataFormater"></mask>
+      <text class="TableCore.Plugin.ExportTextFormater" file="TextExport.xlsx" sheet="TextExport_cn"></text>
+      <bool class="TableCore.Plugin.CsharpBoolFormater"></bool>
+      <raw class="TableCore.Plugin.RawDataFormater"></raw>
+      <int class="TableCore.Plugin.RawDataFormater"></int>
+      <uint class="TableCore.Plugin.RawDataFormater"></uint>
+      <long class="TableCore.Plugin.RawDataFormater"></long>
+      <float class="TableCore.Plugin.RawDataFormater"></float>
+      
+      <ui_mode class="TableCore.Plugin.EnumDataFormater" enums="Normal,Dialog,Status,TopStatus"></ui_mode>
+      <ui_property class="TableCore.Plugin.EnumMaskFormater" enums="None,Singleton,AutoClose,NoMask,FullScreen"></ui_property>
+
+      <action class="TableCore.Plugin.EnumDataFormater" enums="None,Talk,Ask,Option"></action>
+      <emotion class="TableCore.Plugin.EnumDataFormater" enums="Normal,Smile,Laugh,Cry,Sad"></emotion>
+      <task_state class="TableCore.Plugin.EnumDataFormater" enums="inactive,doing,success,faild"></task_state>
+    </formaters>
+
+    <types>
+      <raw default="{}" name="string" pattern="string"></raw>
+      <mask default="" name="int">^([a-z]*|\[ALL\])$</mask>
+      <float default="0" name="float" pattern="float"></float>
+      <uint default="0" name="int" pattern="uint">^\+?\d+$</uint>
+      <int default="0" name="int" pattern="int"></int>
+      <long default="0" name="long" pattern="int"></long>
+      <array default="[]" name="int[]" pattern="int_array"></array>
+      <matrix default="[]" name="int[][]" pattern="matrix"></matrix>
+      <text default="" name="TextRef" pattern="string"></text>
+      <decimal default="0" name="HugeNumber">^(\-|\+)?\d+(.)?\d*(E(\+|\-)\d+)?$</decimal>
+      <bool default="false" name="bool" case="lower">^(true|false)$</bool>
+      <string default="" name="string" pattern="string"></string>
+      <ui_mode default="Normal" name="int"></ui_mode>
+      <ui_property default="Singleton,AutoClose" name="int" case="lower">^(none|singleton|autoclose|nomask|fullscreen|,)*$</ui_property>
+
+      <action default="talk" name="EAction" case="lower">^(none|talk|ask|option)*$</action>
+      <emotion default="normal" name="EEmotion" case="lower">^(normal|smile|laugh|cry|sad)*$</emotion>
+      <task_state default="inactive" name="int" case="lower"></task_state>
+    </types>
+
+  </class-mode>
+
+  <output category="list">
+    <data-ext>txt</data-ext>
+    <data-mode>list</data-mode>
+  </output>
+
+  <output category="dic">
+    <data-ext>txt</data-ext>
+    <data-modify class="TableCore.GameFormater.CompanyUpg">
+      <min>1</min>
+      <max>9000</max>
+      <stage>10000</stage>
+      <table>^Company_Upgrade2$</table>
+    </data-modify>
+    <data-ignore>^.*_ignore$</data-ignore>
+    <data-mode>dictionary</data-mode>
+  </output>
+
+</setup>
