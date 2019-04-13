@@ -1,1 +1,0 @@
-{name} = (EAction){input}.Value<int>("{name}");

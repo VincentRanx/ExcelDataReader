@@ -1,2 +1,0 @@
-var _{name} = {input}.Value<string>("{name}");
-{name} = StringUtil.ParseArray(_{name}, ',', '[', ']');

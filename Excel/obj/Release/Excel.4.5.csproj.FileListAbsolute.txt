@@ -1,4 +1,0 @@
-D:\Developer\Work\ExcelDataReader\Excel\obj\Release\Excel.4.5.csprojResolveAssemblyReference.cache
-D:\Developer\Work\ExcelDataReader\Excel\obj\Release\Excel.4.5.csproj.CoreCompileInputs.cache
-D:\Developer\Work\ExcelDataReader\Excel\obj\Release\Excel.dll
-D:\Developer\Work\ExcelDataReader\Excel\obj\Release\Excel.pdb
