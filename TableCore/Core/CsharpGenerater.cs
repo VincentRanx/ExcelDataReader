@@ -50,13 +50,15 @@ namespace $namespace$
             if (usenamespace)
             {
                 builder.Append("namespace ").Append(mCfg.NamespaceValue).Append("\n");
-                builder.Append("{");
+                builder.Append("{\n");
                 tab++;
             }
             builder.AppendWithTab("public class ", tab).Append(mod.ClassName).Append(" : TableBase\n");
             builder.AppendWithTab("{\n", tab++);
 
-            for(int i = 0; i < mod.PropertyCount; i++)
+            AppendConstructer(builder, tab, mod);
+
+            for (int i = 0; i < mod.PropertyCount; i++)
             {
                 ClassModel.Property p = mod.GetProperty(i);
                 if (p.IsID || p.Ignore)
@@ -64,7 +66,9 @@ namespace $namespace$
                 builder.AppendWithTab("public ", tab).Append(p.GenType.GTName).Append(" ").Append(p.Name).Append(" {get; private set;}\n");
             }
 
+
             AppendOverrideInit(builder, tab, mod);
+            AppendClone(builder, tab, mod);
 
             builder.AppendWithTab("}\n", --tab);
 
@@ -80,6 +84,30 @@ namespace $namespace$
             File.WriteAllText(file, text, Encoding.UTF8);
         }
         
+        void AppendConstructer(StringBuilder builder, int tab, ClassModel mod)
+        {
+            builder.AppendWithTab("public ", tab);
+            builder.Append(mod.ClassName).Append("() : base() {}\n");
+            builder.AppendWithTab("public ", tab);
+            builder.Append(mod.ClassName).Append("(int id) : base(id) {}\n");
+        }
+
+        void AppendClone(StringBuilder builder, int tab, ClassModel mod)
+        {
+            builder.AppendWithTab("public virtual void Clone(", tab);
+            builder.Append(mod.ClassName).Append(" other)\n");
+            builder.AppendWithTab("{\n", tab++);
+            for (int i = 0; i < mod.PropertyCount; i++)
+            {
+                ClassModel.Property p = mod.GetProperty(i);
+                if (p.IsID || p.Ignore)
+                    continue;
+                builder.AppendWithTab(p.Name, tab);
+                builder.Append(" = other.").Append(p.Name).Append(";\n");
+            }
+            builder.AppendWithTab("}\n", --tab);
+        }
+
         void AppendOverrideInit(StringBuilder builder, int tab, ClassModel mod)
         {
             if (mod.PropertyCount < 2)
