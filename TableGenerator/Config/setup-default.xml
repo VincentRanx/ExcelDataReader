@@ -8,6 +8,10 @@
       <using>Newtonsoft.Json.Linq</using>
     </namespace>
 
+    <indexed>
+      <class>TableIndex</class>
+    </indexed>
+
     <patterns>
       <int>^(\-|\+)?\d+$</int>
       <uint>^\+?\d+$</uint>

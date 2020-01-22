@@ -181,7 +181,6 @@ namespace TableCore
 
         public static string GetRelativePath(string relativePath)
         {
-
             string path = AppDomain.CurrentDomain.BaseDirectory;
             path = Path.Combine(path, relativePath);
             return path;

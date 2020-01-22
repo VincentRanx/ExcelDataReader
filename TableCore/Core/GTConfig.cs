@@ -18,6 +18,7 @@ namespace TableCore
         public EGTLang Lang { get; private set; }
         public string NamespaceValue { get; set; }
         public List<string> UsingNamespace { get; private set; }
+        public List<string> IndexedClass { get; private set; }
         Dictionary<string, GTType> mGTTypes = new Dictionary<string, GTType>();
         Dictionary<string, string> mPatterns = new Dictionary<string, string>();
         Dictionary<string, IGenFormater> mFormaters = new Dictionary<string, IGenFormater>();
@@ -69,6 +70,7 @@ namespace TableCore
             Lang = (EGTLang)Enum.Parse(typeof(EGTLang), element.GetAttribute("lang"), true);
             OutputFolder = string.Format("../CODE_{0}", Lang);
             UsingNamespace = new List<string>();
+            IndexedClass = new List<string>();
             Merge(element);
         }
 
@@ -92,6 +94,18 @@ namespace TableCore
                         if (import != null && import.Name == "using")
                             UsingNamespace.Add(import.InnerText);
                     }
+                }
+            }
+
+            XmlElement indexed = GTConfig.GetChildElement(element, "indexed");
+            if(indexed != null)
+            {
+                XmlNodeList classes = indexed.ChildNodes;
+                for (int i = 0; i < classes.Count; i++)
+                {
+                    XmlElement cname = classes[i] as XmlElement;
+                    if (cname != null && cname.Name == "class")
+                        IndexedClass.Add(cname.InnerText);
                 }
             }
 

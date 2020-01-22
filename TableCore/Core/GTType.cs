@@ -40,7 +40,7 @@ namespace TableCore
             DefaultValue = element.GetAttribute("default");
             GTName = element.GetAttribute("name");
             mPattern = element.InnerText;
-            OverrideCode = Utils.ReadRelativeFile(string.Format("Config/{0}-input-{1}.txt", Name, Lang.ToString()));
+            OverrideCode = Utils.ReadRelativeFile(string.Format("Config/Types/{0}-input-{1}.txt", Name, Lang.ToString()));
         }
 
         public void Init(XmlElement element, Dictionary<string,string> patterns, Dictionary<string, IGenFormater> formaters)
@@ -48,7 +48,7 @@ namespace TableCore
             Name = element.Name;
             DefaultValue = element.GetAttribute("default");
             GTName = element.GetAttribute("name");
-            OverrideCode = Utils.ReadRelativeFile(string.Format("Config/{0}-input-{1}.txt", Name, Lang.ToString()));
+            OverrideCode = Utils.ReadRelativeFile(string.Format("Config/Types/{0}-input-{1}.txt", Name, Lang.ToString()));
             var str = element.GetAttribute("case");
             if (!string.IsNullOrEmpty(str))
                 CaseType = (ECaseType)Enum.Parse(typeof(ECaseType), str);

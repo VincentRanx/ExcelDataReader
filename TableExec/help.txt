@@ -9,3 +9,8 @@ exec [arg1] [arg2] [arg3]... [excel file]
 -cs_[category] [folder] :C#代码输出路径
 -clean [sheet]          :指定工作表 并清理内容
 -ignore_sheet [sheet]   :忽略表格
+
+文件夹定义：
+Config/Types            :定义类型转换覆盖代码，命名规则： type-input-csharp.txt
+Config/Partials         :定义自定义局部代码，命名规则：init-classname.txt(classname 初始化代码)
+                                                    code-classname.txt(classname 自定义代码)

@@ -68,9 +68,8 @@ namespace TableCore.Plugin
             }
             else
             {
-                int num;
-                if (int.TryParse(input, out num))
-                    return num.ToString();
+                if (int.TryParse(input, out n))
+                    return n;
                 string[] args = input.Split(',');
                 for (int i = 0; i < args.Length; i++)
                 {

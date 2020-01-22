@@ -14,7 +14,7 @@ $using-namespace$
 
 namespace $namespace$
 {
-    public class $class-name$ : TableBase
+    public partial class $class-name$ : TableBase
     {
         $fields$
 
@@ -26,7 +26,6 @@ namespace $namespace$
     }
 }
      */
-
     public class CsharpGenerater : ICodeGenerater
     {
         
@@ -53,8 +52,11 @@ namespace $namespace$
                 builder.Append("{\n");
                 tab++;
             }
-            builder.AppendWithTab("public class ", tab).Append(mod.ClassName).Append(" : TableBase\n");
+            builder.AppendWithTab("public partial class ", tab).Append(mod.ClassName).Append(" : TableBase\n");
             builder.AppendWithTab("{\n", tab++);
+
+            if (mCfg.IndexedClass.Contains(mod.ClassName))
+                AppendPropertyIndex(builder, tab, mod);
 
             AppendConstructer(builder, tab, mod);
 
@@ -66,10 +68,9 @@ namespace $namespace$
                 builder.AppendWithTab("public ", tab).Append(p.GenType.GTName).Append(" ").Append(p.Name).Append(" {get; private set;}\n");
             }
 
-
             AppendOverrideInit(builder, tab, mod);
             AppendClone(builder, tab, mod);
-
+            AppendExtendCode(builder, tab, mod);
             builder.AppendWithTab("}\n", --tab);
 
             if (usenamespace)
@@ -83,7 +84,20 @@ namespace $namespace$
             string text = builder.ToString();
             File.WriteAllText(file, text, Encoding.UTF8);
         }
-        
+
+        void AppendPropertyIndex(StringBuilder builder, int tab, ClassModel mod)
+        {
+            int index = 0;
+            for (int i = 0; i < mod.PropertyCount; i++)
+            {
+                var p = mod.Properties[i];
+                if (p.Ignore)
+                    continue;
+                builder.AppendWithTab("public const int ", tab);
+                builder.Append(p.Name).Append("_index = ").Append(index++).Append(";\n");
+            }
+        }
+
         void AppendConstructer(StringBuilder builder, int tab, ClassModel mod)
         {
             builder.AppendWithTab("public ", tab);
@@ -106,6 +120,23 @@ namespace $namespace$
                 builder.Append(" = other.").Append(p.Name).Append(";\n");
             }
             builder.AppendWithTab("}\n", --tab);
+        }
+
+        void AppendExtendCode(StringBuilder builder, int tab, ClassModel mod)
+        {
+            var file = Utils.GetRelativePath(string.Format("Config/Partials/code-{0}.txt", mod.ClassName));
+            if (File.Exists(file))
+            {
+                using (var reader = File.OpenText(file))
+                {
+                    string str;
+                    while ((str = reader.ReadLine()) != null)
+                    {
+                        builder.AppendWithTab(str, tab).Append("\n");
+                    }
+                    reader.Close();
+                }
+            }
         }
 
         void AppendOverrideInit(StringBuilder builder, int tab, ClassModel mod)
@@ -137,6 +168,19 @@ namespace $namespace$
                     {
                         builder.AppendWithTab(lines[n], tab).Append("\n");
                     }
+                }
+            }
+            var part = Utils.GetRelativePath(string.Format("Config/Partials/init-{0}.txt", mod.ClassName));
+            if(File.Exists(part))
+            {
+                using (var reader = File.OpenText(part))
+                {
+                    string str;
+                    while((str = reader.ReadLine()) != null)
+                    {
+                        builder.AppendWithTab(str, tab).Append("\n");
+                    }
+                    reader.Close();
                 }
             }
             builder.AppendWithTab("}\n", --tab);

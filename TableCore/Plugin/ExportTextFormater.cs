@@ -68,9 +68,9 @@ namespace TableCore.Plugin
             {
                 Match mat = Regex.Match(input, voice_pattern);
                 if (mat == null || mat.Length <= 8)
-                    return input.GetHashCode();
+                    return StringUtil.ToHash(input);
                 else
-                    return input.Substring(mat.Length).GetHashCode();
+                    return StringUtil.ToHash(input.Substring(mat.Length));
             }
         }
 
@@ -93,7 +93,7 @@ namespace TableCore.Plugin
             }
             JsonData data = new JsonData();
             data["comment"] = comment;
-            data["id"] = txt.GetHashCode();// StringUtil.ToHash(input);
+            data["id"] = StringUtil.ToHash(txt);// StringUtil.ToHash(input);
             data["text"] = txt;
             data["voice"] = voice;
             return new ExportText(data, mFile, mSheet, mStartRow, mStartCol);
