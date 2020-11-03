@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace TableCore.Plugin
@@ -6,6 +7,7 @@ namespace TableCore.Plugin
     public class HashFormater : IGenFormater
     {
         public bool ignoreCase = false;
+        readonly string num_pattern = @"^(\-|\+)?\d+$";
 
         public IExportData ExportData(string data, string comment)
         {
@@ -14,6 +16,8 @@ namespace TableCore.Plugin
 
         public JsonData Format(string data, GTOutputCfg catgory)
         {
+            if (Regex.IsMatch(data, num_pattern))
+                return int.Parse(data);
             if (ignoreCase)
                 return StringUtil.IgnoreCaseToHash(data);
             else

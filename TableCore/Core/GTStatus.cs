@@ -428,7 +428,7 @@ namespace TableCore
                         skip = true;
                         break;
                     }
-                    entity.SetProperty(property.Index, dt, Utils.GetCellName(r, j + m_StartCol));
+                    entity.SetProperty(property.Index, dt, Utils.GetCellName(r, j + m_StartCol), this);
                     var comment = string.Format("{0}[{1}]", UsedTableName, property.Name);
                     IExportData exp = property.GenType.ExportData(dt, comment);
                     if (exp != null)
@@ -485,12 +485,15 @@ namespace TableCore
                 }
                 str = JsonMapper.ToJson(arr);
             }
-            string folder = Config.ActiveData.DataFolder;
-            if (!Directory.Exists(folder))
-                Directory.CreateDirectory(folder);
-            string file = DataPath;
-            byte[] data = Encoding.UTF8.GetBytes(str);
-            File.WriteAllBytes(file, data);
+            if (n > 0)
+            {
+                string folder = Config.ActiveData.DataFolder;
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+                string file = DataPath;
+                byte[] data = Encoding.UTF8.GetBytes(str);
+                File.WriteAllBytes(file, data);
+            }
             progressHandler?.Invoke(99, "Write File...");
         }
 

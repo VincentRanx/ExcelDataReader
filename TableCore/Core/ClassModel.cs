@@ -114,7 +114,7 @@ namespace TableCore
                     if (p.IsID)
                     {
                         AutoId = false;
-                        if (p.GenType.Name != "int")
+                        if (p.GenType.GTName != "int")
                             throw new Exception("ID need to be defined as int.");
                     }
                 }
