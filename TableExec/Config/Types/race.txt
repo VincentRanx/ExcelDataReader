@@ -1,0 +1,10 @@
+@declare: ERace default: "unknown"
+
+@formatter: "TableCore.Plugin.EnumDataFormatter"
+unknown
+人类
+怪物
+动物
+
+@json-input:
+{name} = (ERace)(int){input}["{name}"];

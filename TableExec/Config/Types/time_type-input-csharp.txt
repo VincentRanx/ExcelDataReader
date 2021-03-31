@@ -1,0 +1,1 @@
+{name} = (ETimeType)(int){input}["{name}"];

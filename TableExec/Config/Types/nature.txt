@@ -1,0 +1,17 @@
+@declare: ENature default:none
+
+@formatter: "TableCore.Plugin.EnumDataFormatter"
+none
+成熟稳重
+幼稚调皮
+温柔体贴
+活泼可爱
+脾气暴躁
+内向害羞
+中二幽默
+胆小怕事
+慢条斯理
+豪放不羁
+
+@json-input:
+{name} = (ENature)(int){input}["{name}"];

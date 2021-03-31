@@ -1,13 +1,14 @@
 ﻿using LitJson;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class EnumMaskFormater : IGenFormater
+    public class EnumMaskFormatter : IGenFormatter, IGenCmdInitializer, IGenXmlInitializer
     {
         string[] mEnums;
         int[] mValues;
-
         public void Init(XmlElement element)
         {
             string arg = element.GetAttribute("enums");
@@ -34,6 +35,30 @@ namespace TableCore.Plugin
                     else
                         n <<= 1;
                     mValues[i] = n;
+                }
+            }
+        }
+
+        public void Init(Dictionary<string, string> args, string content)
+        {
+            if (string.IsNullOrEmpty(content))
+                mEnums = new string[0];
+            else
+                mEnums = content.Split('\n');
+            var pattern = @"^(\-|\+)?\d+ *: *[\w\W]+$";
+            mValues = new int[mEnums.Length];
+            for (int i = 0; i < mEnums.Length; i++)
+            {
+                if (Regex.IsMatch(mEnums[i], pattern))
+                {
+                    var n = mEnums[i].IndexOf(':');
+                    mValues[i] = int.Parse(mEnums[i].Substring(0, n).Trim());
+                    mEnums[i] = mEnums[i].Substring(n + 1).Trim();
+                }
+                else
+                {
+                    mEnums[i] = mEnums[i].Trim();
+                    mValues[i] = 1 << i;
                 }
             }
         }

@@ -1,0 +1,1 @@
+{name} = (EBuffBlend)(int){input}["{name}"];

@@ -1,0 +1,13 @@
+List<string> {name}_arr = new List<string>();
+if (StringUtil.ParseArray((string){input}["{name}"], {name}_arr, ',', '[', ']'))
+{
+	{name} = new RewardType[{name}_arr.Count];
+	for (int i = 0; i < {name}.Length; i++)
+	{
+		{name}[i] = new RewardType({name}_arr[i]);
+	}
+}
+else
+{
+	{name} = new RewardType[0];
+}

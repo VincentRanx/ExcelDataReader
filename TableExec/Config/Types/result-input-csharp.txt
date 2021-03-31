@@ -1,0 +1,1 @@
+{name} = (EResult)(int){input}["{name}"];

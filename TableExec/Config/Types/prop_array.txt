@@ -1,0 +1,17 @@
+@declare: "PropCounter[]" default: "[]" ignorecase: true
+
+@json-input:
+var _{name} = (string)obj["{name}"];
+var _{name}_arr = new List<string>();
+if (StringUtil.ParseArray(_{name}, _{name}_arr, ',', '[', ']'))
+{
+    {name} = new PropCounter[_{name}_arr.Count];
+    for (int i = 0; i < {name}.Length; i++)
+    {
+        {name}[i] = new PropCounter(_{name}_arr[i]);
+    }
+}
+else
+{
+    {name} = new PropCounter[0];
+}

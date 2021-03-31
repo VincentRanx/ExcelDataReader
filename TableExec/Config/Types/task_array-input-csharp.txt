@@ -1,0 +1,13 @@
+List<string> {name}_arr = new List<string>();
+if (StringUtil.ParseArray((string){input}["{name}"], {name}_arr, ',', '[', ']'))
+{
+	{name} = new TaskTargetType[{name}_arr.Count];
+	for (int i = 0; i < {name}.Length; i++)
+	{
+		{name}[i] = new TaskTargetType({name}_arr[i]);
+	}
+}
+else
+{
+	{name} = new TaskTargetType[0];
+}

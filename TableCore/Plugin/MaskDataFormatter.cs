@@ -3,14 +3,9 @@ using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class MaskDataFormater : IGenFormater
+    public class MaskDataFormatter : IGenFormatter
     {
         string all = "abcdefghigklmnopqrstuvwxyz";
-
-        public void Init(XmlElement element)
-        {
-
-        }
 
         public bool IsValid(string input)
         {

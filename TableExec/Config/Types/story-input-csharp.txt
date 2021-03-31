@@ -1,0 +1,1 @@
+{name} = new StoryPointer((string){input}["{name}"]);

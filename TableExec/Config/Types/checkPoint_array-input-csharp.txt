@@ -1,0 +1,13 @@
+List<string> {name}_arr = new List<string>();
+if (StringUtil.ParseArray((string){input}["{name}"], {name}_arr, '+', '[', ']'))
+{
+	{name} = new Vector4[{name}_arr.Count];
+	for (int i = 0; i < {name}.Length; i++)
+	{
+		{name}[i] = StringUtil.ParseVector4({name}_arr[i]);				
+	}
+}
+else
+{
+	{name} = new Vector4[0]; //StringUtil.ParseVector4("(0,0,0,0)");
+}

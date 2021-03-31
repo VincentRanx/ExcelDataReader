@@ -1,0 +1,3 @@
+var _{name} = (string){input}["{name}"];
+{name} = new List<string>();
+StringUtil.ParseArray(_{name}, {name}, ',', '\0', '\0');

@@ -1,0 +1,10 @@
+@declare: string default: ""
+
+@json-input:
+{name} = (string){input}["{name}"];
+
+#@binary-input:
+{name} = {input}.ReadString();
+
+#@binary-output:
+{output}.WriteString({name});

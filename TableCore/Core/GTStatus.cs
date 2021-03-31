@@ -248,7 +248,7 @@ namespace TableCore
                 property = default(ClassModel.Property);
                 return false;
             }
-            GTType type = Config.ActiveClass.GetGTType(str);
+            GTType type = Config.ActiveClass.GetGTType(str, true);
             p.GenType = type ?? throw new TypeNotDefinedException(str);
             if(!m_SkipTypeDefine)
                 p.Comment = Utils.GetCell(m_UseTab, m_StartRow + 2, m_StartCol + pindex);

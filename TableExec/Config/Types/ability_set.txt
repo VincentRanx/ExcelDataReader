@@ -1,0 +1,7 @@
+@declare: AbilitySet case: "lower" default: "[]"
+
+@formatter: "TableCore.Plugin.RawDataFormatter"
+
+@json-input:
+{name} = new AbilitySet();
+{name}.Deserialize(PersistentManager.VERSION, {input}["{name}"]);

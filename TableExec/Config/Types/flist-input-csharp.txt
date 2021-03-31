@@ -1,0 +1,10 @@
+var _{name} = (string){input}["{name}"];
+var _{name}_lst = new List<string>();
+{name} = new List<IdentifyFloat>();
+if (StringUtil.ParseArray(_{name}, _{name}_lst, ',', '[', ']'))
+{
+    for (int i = 0; i < _{name}_lst.Count; i++)
+    {
+        {name}.Add(new IdentifyFloat(_{name}_lst[i]));
+    }
+}

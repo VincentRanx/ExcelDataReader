@@ -21,7 +21,7 @@ namespace TableCore
         public List<string> IndexedClass { get; private set; }
         Dictionary<string, GTType> mGTTypes = new Dictionary<string, GTType>();
         Dictionary<string, string> mPatterns = new Dictionary<string, string>();
-        Dictionary<string, IGenFormater> mFormaters = new Dictionary<string, IGenFormater>();
+        Dictionary<string, IGenFormatter> mFormaters = new Dictionary<string, IGenFormatter>();
         public string OutputFolder { get; set; }
 
         public Dictionary<string, GTType> GTTypes { get { return mGTTypes; } }
@@ -41,21 +41,22 @@ namespace TableCore
             return mPatterns;
         }
 
-        Dictionary<string, IGenFormater> GetFormatters(XmlElement root)
+        Dictionary<string, IGenFormatter> GetFormatters(XmlElement root)
         {
             if (root == null)
                 return mFormaters;
-            IGenFormater formater;
+            IGenFormatter formater;
             foreach (var node in root.ChildNodes)
             {
                 XmlElement f = node as XmlElement;
                 if (f == null)
                     continue;
                 var c = f.GetAttribute("class");
-                formater = Utils.NewInstance(c) as IGenFormater;
+                formater = Utils.NewInstance(c) as IGenFormatter;
                 if (formater != null)
                 {
-                    formater.Init(f);
+                    if (formater is IGenXmlInitializer)
+                        ((IGenXmlInitializer)formater).Init(f);
                     mFormaters[f.Name] = formater;
                     GTType tp;
                     if (mGTTypes.TryGetValue(f.Name, out tp))
@@ -109,8 +110,8 @@ namespace TableCore
                 }
             }
 
-            XmlElement xfors = GTConfig.GetChildElement(element, "formaters");
-            Dictionary<string, IGenFormater> formaters = GetFormatters(xfors);
+            XmlElement xfors = GTConfig.GetChildElement(element, "formatters");
+            Dictionary<string, IGenFormatter> formaters = GetFormatters(xfors);
             XmlElement patt = GTConfig.GetChildElement(element, "patterns");
             Dictionary<string, string> patterns = GetPatterns(patt);
 
@@ -122,21 +123,29 @@ namespace TableCore
                     XmlElement tp = node as XmlElement;
                     if (tp != null)
                     {
-                        GTType type = new GTType(Lang);
-                        type.Init(tp, patterns, formaters);
-                        mGTTypes[type.Name] = type;
+                        var type = GetGTType(tp.Name, false);
+                        if (type == null)
+                        {
+                            type = new GTType(Lang);
+                            mGTTypes[tp.Name] = type;
+                            type.Init(true, tp, patterns, formaters);
+                        }
+                        else
+                            type.Init(false, tp, patterns, formaters);
                     }
                 }
             }
         }
 
-        public GTType GetGTType(string name)
+        public GTType GetGTType(string name, bool load)
         {
             GTType tp;
-            if (mGTTypes.TryGetValue(name, out tp))
-                return tp;
-            else
-                return null;
+            if (!mGTTypes.TryGetValue(name, out tp) && load)
+            {
+                tp = new GTType(name);
+                mGTTypes[name] = tp;
+            }
+            return tp ;
         }
 
     }

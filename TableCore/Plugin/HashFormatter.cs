@@ -1,10 +1,11 @@
 ﻿using LitJson;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class HashFormater : IGenFormater
+    public class HashFormatter : IGenFormatter, IGenXmlInitializer, IGenCmdInitializer
     {
         public bool ignoreCase = false;
         readonly string num_pattern = @"^(\-|\+)?\d+$";
@@ -29,9 +30,17 @@ namespace TableCore.Plugin
             ignoreCase = element.GetAttribute("ignore_case") == "true";
         }
 
+        public void Init(Dictionary<string, string> args, string content)
+        {
+            string v;
+            if (args.TryGetValue("ignore_case", out v))
+                ignoreCase = StringUtil.EqualIgnoreCase(v, "true");
+        }
+
         public bool IsValid(string data)
         {
             return true;
         }
+
     }
 }

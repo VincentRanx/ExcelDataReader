@@ -1,0 +1,8 @@
+@declare: ESex default: "unknown"
+
+@formatter: "TableCore.Plugin.EnumDataFormatter"
+unknown
+男
+女
+
+{name} = (ESex)(int){input}["{name}"];

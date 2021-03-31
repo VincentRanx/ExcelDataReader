@@ -1,4 +1,5 @@
 ﻿using LitJson;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace TableCore.Plugin
@@ -14,12 +15,22 @@ namespace TableCore.Plugin
     }
 
     // 数据类型输出格式化
-    public interface IGenFormater
+    public interface IGenFormatter
     {
-        void Init(XmlElement element);
+        //void Init(Dictionary<string, string> args, string content);
         bool IsValid(string data);
         IExportData ExportData(string data, string comment);
         JsonData Format(string data, GTOutputCfg catgory);
+    }
+
+    public interface IGenXmlInitializer
+    {
+        void Init(XmlElement element);
+    }
+
+    public interface IGenCmdInitializer
+    {
+        void Init(Dictionary<string, string> args, string content);
     }
 
     // 数据输出时格式化

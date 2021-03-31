@@ -3,13 +3,8 @@ using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class CsharpBoolFormater : IGenFormater
+    public class CsharpBoolFormatter : IGenFormatter
     {
-        public void Init(XmlElement element)
-        {
-
-        }
-
         public bool IsValid(string input)
         {
             string str = input.ToLower();

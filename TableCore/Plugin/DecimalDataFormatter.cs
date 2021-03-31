@@ -5,14 +5,9 @@ using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class DecimalDataFormater : IGenFormater
+    public class DecimalDataFormatter : IGenFormatter
     {
-        StringBuilder buffer;
-
-        public void Init(XmlElement element)
-        {
-            buffer = new StringBuilder(30);
-        }
+        StringBuilder buffer = new StringBuilder(30);
 
         public bool IsValid(string input)
         {

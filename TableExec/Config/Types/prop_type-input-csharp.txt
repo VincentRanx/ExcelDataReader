@@ -1,0 +1,1 @@
+{name} = (EPropType)(int){input}["{name}"];

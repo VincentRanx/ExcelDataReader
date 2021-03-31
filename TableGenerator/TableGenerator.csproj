@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppIcon.ico" />
+    <Content Include="Config\action-binary-csharp.txt" />
     <Content Include="Config\action-input-csharp.txt" />
     <Content Include="Config\array-input-csharp.txt" />
     <Content Include="Config\decimal-input-csharp.txt" />
@@ -132,6 +133,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Config\text-input-csharp.txt" />
+    <Content Include="Config\int.txt" />
+    <Content Include="Config\Types\string.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Config\Types\int.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>

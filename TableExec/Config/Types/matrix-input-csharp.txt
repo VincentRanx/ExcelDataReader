@@ -1,0 +1,11 @@
+var _{name} = (string){input}["{name}"];
+var _{name}_mat = StringUtil.ParseMatrix(_{name}, ',', '[', ']');
+{name} = new int[_{name}_mat.Length][];
+for(int i = 0 ;i < {name}.Length; i++)
+{
+    {name}[i] = new int[_{name}_mat[i].Length];
+    for(int j = 0; j < {name}[i].Length; j ++)
+    {
+        {name}[i][j] = int.Parse(_{name}_mat[i][j]);
+    }
+}

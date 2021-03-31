@@ -1,0 +1,1 @@
+{name} = (ETaskState)(int){input}["{name}"];

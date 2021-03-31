@@ -1,0 +1,1 @@
+{name} = new AnimalCounter((string)obj["{name}"]);

@@ -1,0 +1,1 @@
+{name} = (ENewsType)(int){input}["{name}"];

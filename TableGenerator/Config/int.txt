@@ -1,0 +1,15 @@
+﻿@declare: int 
+^(\-|\+)?\d+$
+
+@default:
+0
+
+@formater: "TableCore.EnumFormater"
+0: 默认
+1: 特写
+
+@json-input:
+{name} = (int){input}["{name}"];
+
+@binary-input:
+{name} = {reader}.ReadInt32();

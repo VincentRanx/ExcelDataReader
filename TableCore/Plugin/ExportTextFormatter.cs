@@ -1,10 +1,11 @@
 ﻿using LitJson;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class ExportTextFormater : IGenFormater
+    public class ExportTextFormatter : IGenFormatter, IGenCmdInitializer, IGenXmlInitializer
     {
         readonly string voice_pattern = @"^\[voice:[a-zA-Z0-9_]+\]";
 
@@ -55,6 +56,19 @@ namespace TableCore.Plugin
                 mStartCol = int.Parse(s);
         }
 
+        public void Init(Dictionary<string, string> args, string content)
+        {
+            string v;
+            if (args.TryGetValue("file", out v))
+                mFile = v;
+            if (args.TryGetValue("sheet", out v))
+                mSheet = v;
+            if (args.TryGetValue("row", out v))
+                mStartRow = int.Parse(v);
+            if (args.TryGetValue("col", out v))
+                mStartCol = int.Parse(v);
+        }
+
         public bool IsValid(string input)
         {
             return true;
@@ -98,5 +112,6 @@ namespace TableCore.Plugin
             data["voice"] = voice;
             return new ExportText(data, mFile, mSheet, mStartRow, mStartCol);
         }
+
     }
 }

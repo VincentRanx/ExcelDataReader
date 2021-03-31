@@ -1,0 +1,1 @@
+{name} = (EHumanTag)(int){input}["{name}"];

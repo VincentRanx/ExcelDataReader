@@ -1,0 +1,1 @@
+{name} = (EEquipType)(int){input}["{name}"];

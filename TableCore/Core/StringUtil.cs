@@ -9,7 +9,7 @@ namespace TableCore
     public static class StringUtil
     {
         static object mLock = new object();
-        public const int UPER_2_LOWER = 'a' - 'A';
+        public const int UPPER_2_LOWER = 'a' - 'A';
 
         //public static ObjectBuffer<StringBuilder> BuilderBuffer { get { return mBuilders; } }
 
@@ -40,6 +40,10 @@ namespace TableCore
             StringBuilder builder = new StringBuilder();
             builder.Append(data);
             return builder;
+        }
+
+        public static void Release(StringBuilder builder)
+        {
         }
 
         public static string ReleaseBuilder(StringBuilder builder)
@@ -153,6 +157,20 @@ namespace TableCore
             }
         }
 
+        public static bool EqualIgnoreCase(string a, string b)
+        {
+            int la = a == null ? 0 : a.Length;
+            int lb = b == null ? 0 : b.Length;
+            if (la != lb)
+                return false;
+            for (int i = 0; i < la; i++)
+            {
+                if (ToLower(a[i]) != ToLower(b[i]))
+                    return false;
+            }
+            return true;
+        }
+
         public static string ToMD5(string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -187,7 +205,7 @@ namespace TableCore
             int len = str == null ? 0 : str.Length;
             for (int i = 0; i < len; i++)
             {
-                hash = hash * 31 + str[i];
+                hash = (hash << 5) - hash + str[i];
             }
             return hash;
         }
@@ -198,7 +216,18 @@ namespace TableCore
             int len = str == null ? 0 : str.Length;
             for (int i = 0; i < len; i++)
             {
-                hash = hash * 31 + GetCharIgnoreCase(str, i);
+                hash = (hash << 5) - hash + GetCharIgnoreCase(str, i);
+            }
+            return hash;
+        }
+
+        public static int IgnoreCaseToHash(char[] sequence, int offset, int len)
+        {
+            int hash = 0;
+            int end = offset + len;
+            for (int i = offset; i < end; i++)
+            {
+                hash = (hash << 5) - hash + ToLower(sequence[i]);
             }
             return hash;
         }
@@ -207,7 +236,15 @@ namespace TableCore
         {
             char c = str[index];
             if (c >= 'A' && c <= 'Z')
-                return (char)(c + UPER_2_LOWER);
+                return (char)(c + UPPER_2_LOWER);
+            else
+                return c;
+        }
+
+        public static char ToLower(char c)
+        {
+            if (c <= 'Z' && c >= 'A')
+                return (char)(c + UPPER_2_LOWER);
             else
                 return c;
         }

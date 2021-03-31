@@ -44,11 +44,11 @@ namespace TableCore.GameFormater
             {
                 var properties = new ClassModel.Property[5];
                 var cfg = status.Config.ActiveClass;
-                properties[0] = new ClassModel.Property("id", cfg.GetGTType("int"), "id");
-                properties[1] = new ClassModel.Property("income", cfg.GetGTType("decimal"), "income");
-                properties[2] = new ClassModel.Property("time", cfg.GetGTType("float"), "time");
-                properties[3] = new ClassModel.Property("price", cfg.GetGTType("decimal"), "price");
-                properties[4] = new ClassModel.Property("reward", cfg.GetGTType("int"), "reward");
+                properties[0] = new ClassModel.Property("id", cfg.GetGTType("int", true), "id");
+                properties[1] = new ClassModel.Property("income", cfg.GetGTType("decimal", true), "income");
+                properties[2] = new ClassModel.Property("time", cfg.GetGTType("float", true), "time");
+                properties[3] = new ClassModel.Property("price", cfg.GetGTType("decimal", true), "price");
+                properties[4] = new ClassModel.Property("reward", cfg.GetGTType("int", false), "reward");
                 mMod = new ClassModel("Company_Upgrade", properties);
                 return true;
             }

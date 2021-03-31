@@ -3,7 +3,7 @@ using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class JsonDataFormater : IGenFormater
+    public class JsonDataFormatter : IGenFormatter
     {
         public IExportData ExportData(string data, string comment)
         {
@@ -13,11 +13,6 @@ namespace TableCore.Plugin
         public JsonData Format(string data, GTOutputCfg catgory)
         {
             return JsonMapper.ToObject(data);// JsonConvert.DeserializeObject<JToken>(data);
-        }
-
-        public void Init(XmlElement element)
-        {
-            
         }
 
         public bool IsValid(string data)

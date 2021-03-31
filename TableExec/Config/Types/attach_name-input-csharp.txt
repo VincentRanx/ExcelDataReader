@@ -1,0 +1,1 @@
+{name} = (EAttachName)(int){input}["{name}"];

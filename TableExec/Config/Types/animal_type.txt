@@ -1,0 +1,10 @@
+@declare: EAnimalType default: "鸡" case: "lower"
+
+@formatter: "TableCore.Plugin.EnumDataFormatter"
+鸡
+牛
+羊
+猪
+
+@json-input:
+{name} = (EAnimalType)(int){input}["{name}"];

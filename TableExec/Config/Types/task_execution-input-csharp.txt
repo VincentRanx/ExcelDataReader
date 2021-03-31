@@ -1,0 +1,1 @@
+{name} = (ETaskExcution)(int){input}["{name}"];

@@ -1,0 +1,15 @@
+var _{name} = (string){input}["{name}"];
+var _{name}_lst = new List<string>();
+{name} = new Dictionary<int, float>();
+if (StringUtil.ParseArray(_{name}, _{name}_lst, ',', '[', ']'))
+{
+    int _{name}_id;
+    for (int i = 0; i < _{name}_lst.Count; i++)
+    {
+        var _{name}i = _{name}_lst[i].IndexOf('=');
+        var _{name}s = _{name}_lst[i].Substring(0, _{name}i).Trim();
+        if(!int.TryParse(_{name}s, out _{name}_id))
+            _{name}_id = StringUtil.IgnoreCaseToHash(_{name}s);
+        {name}[_{name}_id] = float.Parse(_{name}_lst[i].Substring(_{name}i + 1).Trim());
+    }
+}

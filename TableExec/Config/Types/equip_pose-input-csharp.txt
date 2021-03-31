@@ -1,0 +1,1 @@
+{name} = (EActorPoseMask)(int){input}["{name}"];

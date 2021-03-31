@@ -1,1 +1,8 @@
+@json-input:
 {name} = (EAction){input}.Value<int>("{name}");
+
+binary-input:
+{name} = (EAction){reader}.ReadInt32();
+
+binary-output:
+{writer}.Write((int){name});

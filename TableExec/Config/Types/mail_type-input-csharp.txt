@@ -1,0 +1,1 @@
+{name} = (EMailType)(int){input}["{name}"];

@@ -1,0 +1,1 @@
+{name} = (EStoryGroup)(int){input}["{name}"];

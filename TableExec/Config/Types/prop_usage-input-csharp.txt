@@ -1,0 +1,1 @@
+{name} = (EPropUsage)(int){input}["{name}"];

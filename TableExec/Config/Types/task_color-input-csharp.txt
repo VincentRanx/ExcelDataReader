@@ -1,0 +1,1 @@
+{name} = GameSettings.gameCfg.GetTaskColor((int){input}["{name}"]);

@@ -1,0 +1,13 @@
+@declare: JsonData ignorecase: false
+[\w\W]*
+
+@formatter: "TableCore.Plugin.RawDataFormatter"
+
+@json-input:
+{name} = (int){input}["{name}"];
+
+#@binary-input:
+{name} = {input}.ReadInt32();
+
+#@binary-output:
+{output}.Write({name});

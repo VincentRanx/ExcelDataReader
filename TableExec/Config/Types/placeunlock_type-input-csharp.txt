@@ -1,0 +1,1 @@
+{name} = (EAppointPlaceUnlockType)(int){input}["{name}"];

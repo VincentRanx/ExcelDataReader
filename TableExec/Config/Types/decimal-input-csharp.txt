@@ -1,0 +1,1 @@
+{name} = new HugeNumber((string){input}["{name}"]);

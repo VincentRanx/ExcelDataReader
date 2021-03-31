@@ -1,0 +1,1 @@
+{name} = (ETaskCategory)(int){input}["{name}"];

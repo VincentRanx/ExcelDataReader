@@ -4,16 +4,11 @@ using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class RawDataFormater : IGenFormater
+    public class RawDataFormatter : IGenFormatter
     {
         const string integer = @"^(\-|\+)?\d+$";
         const string boolean = @"^(true|false)$";
         const string number = @"^(\-|\+)?\d+(\.\d+)?$";
-
-        public void Init(XmlElement element)
-        {
-
-        }
 
         public bool IsValid(string input)
         {

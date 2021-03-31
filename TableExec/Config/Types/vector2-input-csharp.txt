@@ -1,0 +1,2 @@
+var _{name} = (string){input}["{name}"];
+{name} = StringUtil.ParseVector2(_{name});

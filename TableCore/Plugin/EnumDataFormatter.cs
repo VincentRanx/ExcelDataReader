@@ -1,10 +1,11 @@
 ﻿using LitJson;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace TableCore.Plugin
 {
-    public class EnumDataFormater : IGenFormater
+    public class EnumDataFormatter : IGenFormatter, IGenCmdInitializer, IGenXmlInitializer
     {
         string[] mEnums;
         int[] mValues;
@@ -29,13 +30,37 @@ namespace TableCore.Plugin
                 mValues = new int[mEnums.Length];
                 string[] values = arg.Split(',');
                 int n = 0;
-                for(int i = 0; i < mValues.Length; i++)
+                for (int i = 0; i < mValues.Length; i++)
                 {
                     if (i < values.Length)
                         n = int.Parse(values[i]);
                     else
                         n++;
                     mValues[i] = n;
+                }
+            }
+        }
+
+        public void Init(Dictionary<string, string> args, string content)
+        {
+            if (string.IsNullOrEmpty(content))
+                mEnums = new string[0];
+            else
+                mEnums = content.Split('\n');
+            var pattern = @"^(\-|\+)?\d+ *: *[\w\W]+$";
+            mValues = new int[mEnums.Length];
+            for (int i = 0; i < mEnums.Length; i++)
+            {
+                if (Regex.IsMatch(mEnums[i], pattern))
+                {
+                    var n = mEnums[i].IndexOf(':');
+                    mValues[i] = int.Parse(mEnums[i].Substring(0, n).Trim());
+                    mEnums[i] = mEnums[i].Substring(n + 1).Trim();
+                }
+                else
+                {
+                    mEnums[i] = mEnums[i].Trim();
+                    mValues[i] = i;
                 }
             }
         }
@@ -74,5 +99,6 @@ namespace TableCore.Plugin
         {
             return null;
         }
+
     }
 }

@@ -124,7 +124,7 @@ namespace TableCore
                 }
             }
             if (AutoId)
-                lst.Insert(0, new Property("id", status.Config.ActiveClass.GetGTType("int"), "Auto ID"));
+                lst.Insert(0, new Property("id", status.Config.ActiveClass.GetGTType("int", true), "Auto ID"));
             m_Properties = lst.ToArray();
             for (int i = 0; i < m_Properties.Length; i++)
             {

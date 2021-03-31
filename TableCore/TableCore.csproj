@@ -54,25 +54,25 @@
     <Compile Include="LitJson\Lexer.cs" />
     <Compile Include="LitJson\Netstandard15Polyfill.cs" />
     <Compile Include="LitJson\ParserToken.cs" />
-    <Compile Include="Plugin\HashFormater.cs" />
-    <Compile Include="Plugin\RawDataFormater.cs" />
-    <Compile Include="Plugin\CsharpBoolFormater.cs" />
+    <Compile Include="Plugin\HashFormatter.cs" />
+    <Compile Include="Plugin\RawDataFormatter.cs" />
+    <Compile Include="Plugin\CsharpBoolFormatter.cs" />
     <Compile Include="Core\CsharpGenerater.cs" />
     <Compile Include="Core\GenData.cs" />
     <Compile Include="Core\HugeNumber.cs" />
     <Compile Include="Core\StringUtil.cs" />
-    <Compile Include="Plugin\DecimalDataFormater.cs" />
-    <Compile Include="Plugin\EnumDataFormater.cs" />
-    <Compile Include="Plugin\EnumMaskFormater.cs" />
-    <Compile Include="Plugin\ExportTextFormater.cs" />
+    <Compile Include="Plugin\DecimalDataFormatter.cs" />
+    <Compile Include="Plugin\EnumDataFormatter.cs" />
+    <Compile Include="Plugin\EnumMaskFormatter.cs" />
+    <Compile Include="Plugin\ExportTextFormatter.cs" />
     <Compile Include="Core\GTConfig.cs" />
     <Compile Include="Core\GTStatus.cs" />
     <Compile Include="Core\GTType.cs" />
     <Compile Include="Core\ICodeGenerater.cs" />
     <Compile Include="Plugin\IPlugins.cs" />
     <Compile Include="Core\IIdentified.cs" />
-    <Compile Include="Plugin\JsonDataFormater.cs" />
-    <Compile Include="Plugin\MaskDataFormater.cs" />
+    <Compile Include="Plugin\JsonDataFormatter.cs" />
+    <Compile Include="Plugin\MaskDataFormatter.cs" />
     <Compile Include="Core\Utils.cs" />
     <Compile Include="Exceptions\DuplexIdException.cs" />
     <Compile Include="Exceptions\NoClassDefineException.cs" />
@@ -80,6 +80,7 @@
     <Compile Include="Exceptions\NoTableException.cs" />
     <Compile Include="Exceptions\TypeNotDefinedException.cs" />
     <Compile Include="Exceptions\ValueNotMatchTypeException.cs" />
+    <Compile Include="Plugin\SitcomFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,9 +98,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Config\Types\string_array-input-csharp.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Config\Types\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -71,6 +71,9 @@ namespace $namespace$
             AppendOverrideInit(builder, tab, mod);
             AppendClone(builder, tab, mod);
             AppendExtendCode(builder, tab, mod);
+
+            AppendBinaryGen(builder, tab, mod);
+
             builder.AppendWithTab("}\n", --tab);
 
             if (usenamespace)
@@ -120,6 +123,7 @@ namespace $namespace$
                 builder.Append(" = other.").Append(p.Name).Append(";\n");
             }
             builder.AppendWithTab("}\n", --tab);
+
         }
 
         void AppendExtendCode(StringBuilder builder, int tab, ClassModel mod)
@@ -151,7 +155,7 @@ namespace $namespace$
                 ClassModel.Property p = mod.GetProperty(i);
                 if (p.IsID || p.Ignore)
                     continue;
-                if (string.IsNullOrEmpty(p.GenType.OverrideCode))
+                if (string.IsNullOrEmpty(p.GenType.JsonInput))
                 {
                     //builder.AppendWithTab(p.Name, tab).Append(" = obj.Value<").Append(p.GenType.GTName)
                     //    .Append(">(\"").Append(p.Name).Append("\");\n");
@@ -161,7 +165,7 @@ namespace $namespace$
                 }
                 else
                 {
-                    string str = p.GenType.OverrideCode.Replace("{name}", p.Name);
+                    string str = p.GenType.JsonInput.Replace("{name}", p.Name);
                     str = str.Replace("{input}", "obj");
                     string[] lines = str.Split('\n');
                     for(int n = 0; n < lines.Length; n++)
@@ -186,11 +190,56 @@ namespace $namespace$
             builder.AppendWithTab("}\n", --tab);
         }
 
+        void AppendBinaryGen(StringBuilder builder, int tab, ClassModel mod)
+        {
+            // public virtual void ReadBinary(BinaryReader reader)
+            builder.AppendWithTab("public override void ReadBinary(BinaryReader reader)\n", tab);
+            builder.AppendWithTab("{\n", tab++);
+            builder.AppendWithTab("base.ReadBinary(reader);\n", tab);
+            for (int i = 0; i < mod.PropertyCount; i++)
+            {
+                var p = mod.GetProperty(i);
+                if (p.IsID || p.Ignore || string.IsNullOrEmpty(p.GenType.BinaryInput))
+                    continue;
+                var input = p.GenType.BinaryInput;
+                input = input.Replace("{name}", p.Name);
+                input = input.Replace("{input}", "reader");
+                string[] lines = input.Split('\n');
+                for (int n = 0; n < lines.Length; n++)
+                {
+                    builder.AppendWithTab(lines[n], tab).Append("\n");
+                }
+            }
+            builder.AppendWithTab("}\n", --tab);
+
+            builder.AppendWithTab("public override void WriteBinary(BinaryWriter writer)\n", tab);
+            builder.AppendWithTab("{\n", tab++);
+            builder.AppendWithTab("base.WriteBinary(writer);\n", tab);
+            for (int i = 0; i < mod.PropertyCount; i++)
+            {
+                var p = mod.GetProperty(i);
+                if (p.IsID || p.Ignore || string.IsNullOrEmpty(p.GenType.BinaryOutput))
+                    continue;
+                var output = p.GenType.BinaryOutput;
+                output = output.Replace("{name}", p.Name);
+                output = output.Replace("{output}", "writer");
+                string[] lines = output.Split('\n');
+                for (int n = 0; n < lines.Length; n++)
+                {
+                    builder.AppendWithTab(lines[n], tab).Append("\n");
+                }
+            }
+            builder.AppendWithTab("}\n", --tab);
+        }
+
         void AppendUsing(StringBuilder builder)
         {
             List<string> use = mCfg.UsingNamespace;
-            builder.Append("using LitJson;\n");
-            for(int i = 0; i < use.Count; i++)
+            if (!use.Contains("LitJson"))
+                builder.Append("using LitJson;\n");
+            if (!use.Contains("System.IO"))
+                builder.Append("using System.IO;\n");
+            for (int i = 0; i < use.Count; i++)
             {
                 builder.Append("using ").Append(use[i]).Append(";\n");
             }

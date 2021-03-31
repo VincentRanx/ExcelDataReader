@@ -228,6 +228,7 @@ exec [arg1] [arg2] [arg3]... [excel file]
                 return error;
             }
             DoGenerate(ref error);
+            //Console.ReadKey();
             return error;
         }
     }
